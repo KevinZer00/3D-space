@@ -31,5 +31,13 @@ canvas#bg {
     background-color: transparent; /* Make background transparent */
 }
 
+.section .content {
+    display: none;
+}
+
+
+
+
+
 
 
