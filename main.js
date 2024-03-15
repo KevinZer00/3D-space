@@ -1,9 +1,19 @@
+
+
 let textMesh;
 
 // Set up Three.js
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(20, window.innerWidth / window.innerHeight, 1, 10000);
 const renderer = new THREE.WebGLRenderer({ antialias: true, canvas: document.getElementById('bg') });
+
+// Load the texture
+const loader = new THREE.TextureLoader();
+loader.load('textures/background.jpg', function (texture) {
+    // Set the scene background property to the loaded texture
+    scene.background = texture;
+});
+
 
 camera.position.set(0, 0, 0);
 
@@ -116,27 +126,6 @@ createGalaxies();
 createAsteroids();
 
 
-// Function to create 3D text
-function createText(text, position) {
-    const loader = new THREE.FontLoader();
-
-    loader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', function (font) {
-        const textGeometry = new THREE.TextGeometry(text, {
-            font: font,
-            size: 0,
-            height: 0.1,
-        });
-        const textMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
-        const textMesh = new THREE.Mesh(textGeometry, textMaterial);
-
-        textMesh.position.x = position.x;
-        textMesh.position.y = position.y; // Adjust Y position to be above the planet
-        textMesh.position.z = position.z;
-
-        scene.add(textMesh);
-    });
-}
-
 
 
 // Base gap value between the edges of each celestial body
@@ -161,11 +150,6 @@ function createCelestialBody(name, scale, texturePath, previousPosition, previou
     // Add the body to the scene
     scene.add(body);
 
-    // Add text label
-    const labelPosition = body.position.clone();
-    labelPosition.y += scale; // Adjust this value as needed
-    createText(name, labelPosition);
-
     return body;
 }
 
@@ -175,76 +159,119 @@ function createCelestialBody(name, scale, texturePath, previousPosition, previou
 let previousPosition = 0;
 let previousScale = 0.01;
 
+//Create array to store clickable bodies 
+const clickableObjects = [];
+
 
 // Create celestial bodies
-const pluto = createCelestialBody('Pluto', 0.01, 'textures/pluto.jpg', previousPosition, 0);
+const pluto = createCelestialBody('Pluto', 0.025, 'textures/pluto.jpg', previousPosition, 0);
+pluto.originalPosition = new THREE.Vector3(pluto.position.x, pluto.position.y, pluto.position.z);
 previousPosition = pluto.position.x;
-previousScale = 0.01;
+previousScale = 0.025;
+clickableObjects.push(pluto);
+pluto.userData.id = 'pluto';
 
-const moon = createCelestialBody('Moon', 0.0146, 'textures/moon.jpg', previousPosition, previousScale);
+const moon = createCelestialBody('Moon', 0.0246, 'textures/moon.jpg', previousPosition, previousScale);
+moon.originalPosition = new THREE.Vector3(moon.position.x, moon.position.y, moon.position.z);
 previousPosition = moon.position.x;
 previousScale = 0.0146;
+clickableObjects.push(moon);
+moon.userData.id = 'moon';
 
-const mercury = createCelestialBody('Mercury', 0.0205, 'textures/mercury.jpg', previousPosition, previousScale);
+const mercury = createCelestialBody('Mercury', 0.0305, 'textures/mercury.jpg', previousPosition, previousScale);
+mercury.originalPosition = new THREE.Vector3(mercury.position.x, mercury.position.y, mercury.position.z);
 previousPosition = mercury.position.x;
 previousScale = 0.0205;
+clickableObjects.push(mercury);
+mercury.userData.id = 'mercury';
 
-const mars = createCelestialBody('Mars', 0.0285, 'textures/mars.jpg', previousPosition, previousScale);
+const mars = createCelestialBody('Mars', 0.0385, 'textures/mars.jpg', previousPosition, previousScale);
+mars.originalPosition = new THREE.Vector3(mars.position.x, mars.position.y, mars.position.z);
 previousPosition = mars.position.x;
 previousScale = 0.0285;
+clickableObjects.push(mars);
+mars.userData.id = 'mars';
 
 const venus = createCelestialBody('Venus', 0.0509, 'textures/venus.jpg', previousPosition, previousScale);
+venus.originalPosition = new THREE.Vector3(venus.position.x, venus.position.y, venus.position.z);
 previousPosition = venus.position.x;
 previousScale = 0.0509;
+clickableObjects.push(venus);
+venus.userData.id = 'venus';
 
 const earth = createCelestialBody('Earth', 0.0536, 'textures/earth.jpg', previousPosition, previousScale);
+earth.originalPosition = new THREE.Vector3(earth.position.x, earth.position.y, earth.position.z);
 previousPosition = earth.position.x;
 previousScale = 0.0536;
+clickableObjects.push(earth);
+earth.userData.id = 'earth';
 
 const neptune = createCelestialBody('Neptune', .2071, 'textures/neptune.jpg', previousPosition, previousScale);
+neptune.originalPosition = new THREE.Vector3(neptune.position.x, neptune.position.y, neptune.position.z);
 previousPosition = neptune.position.x;
 previousScale = .2071;
+clickableObjects.push(neptune);
+neptune.userData.id = 'neptune';
 
 const uranus = createCelestialBody('Uranus', .2135, 'textures/uranus.jpg', previousPosition, previousScale);
+uranus.originalPosition = new THREE.Vector3(uranus.position.x, uranus.position.y, uranus.position.z);
 previousPosition = uranus.position.x;
 previousScale = .2135;
+clickableObjects.push(uranus);
+uranus.userData.id = 'uranus';
 
 const saturn = createCelestialBody('Saturn', .4901, 'textures/saturn.jpg', previousPosition, previousScale);
+saturn.originalPosition = new THREE.Vector3(saturn.position.x, saturn.position.y, saturn.position.z);
 previousPosition = saturn.position.x;
 previousScale = .4901;
+clickableObjects.push(saturn);
+saturn.userData.id = 'saturn';
 
 const jupiter = createCelestialBody('Jupiter', .5882, 'textures/jupiter.jpg', previousPosition, previousScale);
+jupiter.originalPosition = new THREE.Vector3(jupiter.position.x, jupiter.position.y, jupiter.position.z);
 previousPosition = jupiter.position.x;
 previousScale = .5882;
+clickableObjects.push(jupiter);
+jupiter.userData.id = 'jupiter';
 
 const sun = createCelestialBody('Sun', 5.8523, 'textures/sun.jpg', previousPosition, previousScale);
+sun.originalPosition = new THREE.Vector3(sun.position.x, sun.position.y, sun.position.z);
 previousPosition = sun.position.x;
 previousScale = 5.8523;
+clickableObjects.push(sun);
+sun.userData.id = 'sun';
 
-const siriusA = createCelestialBody('Sirius A', 10.0074, 'textures/sirius.jpg', previousPosition, previousScale); // No texture for Sirius A
+const siriusA = createCelestialBody('Sirius A', 10.0074, 'textures/sirius.jpg', previousPosition, previousScale); 
+siriusA.originalPosition = new THREE.Vector3(siriusA.position.x, siriusA.position.y, siriusA.position.z);
 previousPosition = siriusA.position.x;
 previousScale = 10.0074;
+clickableObjects.push(siriusA);
+siriusA.userData.id = 'siriusA';
 
-const betelgeuse = createCelestialBody('Betelgeuse', 497.45, 'textures/betelgeuse.jpg', previousPosition, previousScale); // No texture for Sirius A
+const betelgeuse = createCelestialBody('Betelgeuse', 497.45, 'textures/betelgeuse.jpg', previousPosition, previousScale); 
+betelgeuse.originalPosition = new THREE.Vector3(betelgeuse.position.x, betelgeuse.position.y, betelgeuse.position.z);
 previousPosition = betelgeuse.position.x;
 previousScale = 497.45;
-
+clickableObjects.push(betelgeuse);
+betelgeuse.userData.id = 'betelgeuse';
 
 
 
 // Function to animate all the objects' rotation
 function animateObjects() {
-    pluto.rotation.y += 0.001;
-    moon.rotation.y += 0.001;
-    mercury.rotation.y += 0.001;
-    mars.rotation.y += 0.001;
-    earth.rotation.y += 0.001;
-    neptune.rotation.y += 0.001;
-    uranus.rotation.y += 0.001;
-    saturn.rotation.y += 0.0005;
-    jupiter.rotation.y += 0.0005;
-    sun.rotation.y += 0.0001;
-
+    pluto.rotation.y += 0.005;
+    moon.rotation.y += 0.005;
+    mercury.rotation.y += 0.005;
+    mars.rotation.y += 0.005;
+    venus.rotation.y += 0.005;
+    earth.rotation.y += 0.005;
+    neptune.rotation.y += 0.005;
+    uranus.rotation.y += 0.005;
+    saturn.rotation.y += 0.005;
+    jupiter.rotation.y += 0.005;
+    sun.rotation.y += 0.0025;
+    siriusA.rotation.y += 0.0025;
+    betelgeuse.rotation.y += 0.0025;
 
 }
 
@@ -268,9 +295,8 @@ function animate() {
 // Resize canvas on window resize
 window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
-    camera.far = betelgeuseCameraZ + additionalDistance;
     camera.updateProjectionMatrix();
-    
+
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
@@ -293,7 +319,7 @@ const planets = [
     { positionX: jupiter.position.x, cameraZ: 5.0 },
     { positionX: sun.position.x, cameraZ: 40.0 },
     { positionX: siriusA.position.x, cameraZ: 60.0 },
-    { positionX: betelgeuse.position.x, cameraZ: 4000}
+    { positionX: betelgeuse.position.x, cameraZ: 4000 }
 ];
 
 
@@ -359,6 +385,145 @@ renderer.setPixelRatio(window.devicePixelRatio);
 // Initial camera setup
 
 animate();
+
+
+
+
+
+
+
+//text section 
+let currentlySelectedObject = null;
+
+document.body.appendChild(renderer.domElement);
+renderer.domElement.addEventListener('click', onCanvasClick, false);
+
+function onCanvasClick(event) {
+    // Convert the mouse position to normalized device coordinates (-1 to +1)
+    const mouse = new THREE.Vector2();
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+    // Raycast to find intersected objects
+    const raycaster = new THREE.Raycaster();
+    raycaster.setFromCamera(mouse, camera);
+    const intersects = raycaster.intersectObjects(clickableObjects); // `clickableObjects` should be an array of your planets/meshes
+
+    if (intersects.length > 0) {
+        const selectedObject = intersects[0].object;
+
+        // Check if the object is already selected
+        if (selectedObject === currentlySelectedObject) {
+            // Deselect and move it back to its original position, and remove the blur
+            deselectPlanet(selectedObject);
+        } else {
+            // If another planet is currently selected, first deselect it
+            if (currentlySelectedObject) {
+                deselectPlanet(currentlySelectedObject);
+            }
+
+            // Set the newly selected object
+            currentlySelectedObject = selectedObject;
+
+            // Move the selected planet forward and blur the background
+            focusOnPlanet(selectedObject);
+        }
+    } else {
+        // If the user clicks on empty space, deselect any selected planet
+        if (currentlySelectedObject) {
+            deselectPlanet(currentlySelectedObject);
+            currentlySelectedObject = null;
+        }
+    }
+}
+
+function focusOnPlanet(planetMesh) {
+    // Deselect any previously selected planet
+    if (currentlySelectedObject) {
+        resetPlanet(currentlySelectedObject);
+    }
+
+    // Dim other planets
+    clickableObjects.forEach((obj) => {
+        if (obj !== planetMesh) {
+            gsap.to(obj.material, {
+                opacity: 0.1,
+                duration: 0.5
+            });
+            if (!obj.material.transparent) {
+                obj.material.transparent = true;
+            }
+        }
+    });
+
+    // Show the info panel for the selected planet
+    const planetId = planetMesh.userData.id; // Make sure you've set this when creating the mesh
+    showInfoPanel(planetId);
+
+    // Set the currently selected object
+    currentlySelectedObject = planetMesh;
+}
+
+
+function deselectPlanet() {
+    if (currentlySelectedObject) {
+      // Move the planet back to its original position
+      gsap.to(currentlySelectedObject.position, {
+        z: currentlySelectedObject.originalPosition.z,
+        duration: 1
+      });
+      
+      // Restore the materials for all objects
+      clickableObjects.forEach((obj) => {
+        gsap.to(obj.material, {
+          opacity: 1,
+          duration: 0.5
+        });
+        obj.material.transparent = false; // Only if you originally had it set to true
+      });
+      
+      // Hide the information panel or text
+      hideInfoPanel();
+      
+      // Reset the currently selected object
+      currentlySelectedObject = null;
+    }
+  }
+  
+
+  function resetPlanet(planetMesh) {
+    // Restore other planets' materials
+    clickableObjects.forEach((obj) => {
+        if (obj !== planetMesh) {
+            gsap.to(obj.material, {
+                opacity: 1,
+                duration: 0.5
+            });
+            obj.material.transparent = false;
+        }
+    });
+}
+
+function showInfoPanel(planetId) {
+    // Hide all panels
+    const panels = document.querySelectorAll('.info-panel');
+    panels.forEach(panel => panel.style.display = 'none');
+
+    // Show the selected planet's panel
+    const selectedPanel = document.getElementById(planetId + 'Panel');
+    if (selectedPanel) {
+        selectedPanel.style.display = 'block';
+    }
+}
+
+function hideInfoPanel() {
+    const panels = document.querySelectorAll('.info-panel');
+    panels.forEach(panel => panel.style.display = 'none');
+}
+  
+
+
+
 
 
 

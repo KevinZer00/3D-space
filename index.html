@@ -6,37 +6,79 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
     <canvas id="bg"></canvas>
-    <div class="cubes-container">
-        <div class="section" id="section1">
-            <div class="content">
-                <h1>The Sun:</h1>
-                <p>Enjoy the mesmerizing dance of the cubes.</p>
-            </div>
-        </div>
-        <div class="section" id="section2">
-            <div class="content">
-                <h1>Mercury:</h1>
-                <p>Continue exploring the pixelated world.</p>
-            </div>
-        </div>
-        <div class="section" id="section3">
-            <div class="content">
-                <h1>Venus:</h1>
-                <p>Continue exploring the pixelated world.</p>
-            </div>
-        </div>
-        <div class="section" id="section3">
-            <div class="content">
-                <h1>Venus:</h1>
-                <p>Continue exploring the pixelated world.</p>
-            </div>
-        </div>
+
+    <div id="plutoPanel" class="info-panel" style="display:none;">
+        <h1>Pluto</h1>
+        <p>Pluto is a dwarf planet in the Kuiper Belt, known for its icy surface and heart-shaped glacier.</p>
     </div>
+    
+    <div id="moonPanel" class="info-panel" style="display:none;">
+        <h1>Moon</h1>
+        <p>The Moon is Earth's only natural satellite, affecting tides and creating lunar phases.</p>
+    </div>
+    
+    <div id="mercuryPanel" class="info-panel" style="display:none;">
+        <h1>Mercury</h1>
+        <p>Mercury is the smallest planet in our solar system and the closest to the Sun, with extreme temperature variations.</p>
+    </div>
+    
+    <div id="marsPanel" class="info-panel" style="display:none;">
+        <h1>Mars</h1>
+        <p>Mars, known as the Red Planet, has the tallest volcano and deepest canyon in the solar system.</p>
+    </div>
+    
+    <div id="venusPanel" class="info-panel" style="display:none;">
+        <h1>Venus</h1>
+        <p>Venus is the hottest planet in our solar system and rotates in the opposite direction to most planets.</p>
+    </div>
+    
+    <div id="earthPanel" class="info-panel" style="display:none;">
+        <h1>Earth</h1>
+        <p>Earth is the only planet known to support life, with a diverse ecosystem and vast oceans.</p>
+    </div>
+    
+    <div id="neptunePanel" class="info-panel" style="display:none;">
+        <h1>Neptune</h1>
+        <p>Neptune is the farthest planet from the Sun, known for its intense blue color and strong winds.</p>
+    </div>
+    
+    <div id="uranusPanel" class="info-panel" style="display:none;">
+        <h1>Uranus</h1>
+        <p>Uranus is unique for its tilted rotation axis, leading to extreme seasons and a faint ring system.</p>
+    </div>
+    
+    <div id="saturnPanel" class="info-panel" style="display:none;">
+        <h1>Saturn</h1>
+        <p>Saturn is famous for its stunning rings, made of ice and rock, and has over 80 known moons.</p>
+    </div>
+    
+    <div id="jupiterPanel" class="info-panel" style="display:none;">
+        <h1>Jupiter</h1>
+        <p>Jupiter is the largest planet in our solar system, with a Great Red Spot that is a giant storm.</p>
+    </div>
+    
+    <div id="sunPanel" class="info-panel" style="display:none;">
+        <h1>Sun</h1>
+        <p>The Sun is the star at the center of our solar system, providing the energy that supports life on Earth.</p>
+    </div>
+    
+    <div id="siriusAPanel" class="info-panel" style="display:none;">
+        <h1>Sirius A</h1>
+        <p>Sirius A is the brightest star in our night sky, part of the binary star system with Sirius B.</p>
+    </div>
+    
+    <div id="betelgeusePanel" class="info-panel" style="display:none;">
+        <h1>Betelgeuse</h1>
+        <p>Betelgeuse is a red supergiant star nearing the end of its life, known for its size and brightness.</p>
+    </div>
+    
+      
     
 
 
@@ -48,7 +90,7 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.10.4/dist/gsap.min.js"></script>
     <!-- Include ScrollTrigger plugin -->
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.10.4/dist/ScrollTrigger.min.js"></script>
-    <script src="main.js"></script>
+    <script type="module" src="main.js"></script>
 </body>
 
 </html>
